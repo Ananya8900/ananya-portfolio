@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ananya Singhal — Data Analyst</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f6fa;
+    --surface: #ffffff;
+    --border: #e0e4ef;
+    --accent: #1a3a6b;
+    --accent2: #c9a84c;
+    --text: #1a1f36;
+    --muted: #6b7280;
+    --card: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.15;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(245,246,250,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(26,58,107,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(26,58,107,0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-blob {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(26,58,107,0.08) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    animation: blobFloat 8s ease-in-out infinite;
+  }
+
+  .hero-blob2 {
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+    bottom: 0; left: 200px;
+    animation: blobFloat 12s ease-in-out infinite reverse;
+  }
+
+  @keyframes blobFloat {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-30px) scale(1.05); }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(26,58,107,0.25);
+    padding: 0.4rem 1rem;
+    border-radius: 2px;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-name {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .hero-name span {
+    display: block;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(26,58,107,0.25);
+  }
+
+  .hero-desc {
+    font-size: 0.95rem;
+    color: var(--muted);
+    max-width: 520px;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-desc em {
+    color: var(--accent);
+    font-style: normal;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    padding: 0.85rem 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(26,58,107,0.25);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    padding: 0.85rem 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--muted);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    animation: fadeUp 0.6s 0.5s ease both;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(var(--accent), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 7rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 3rem;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    color: var(--muted);
+    line-height: 1.9;
+    font-size: 0.9rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .about-text p em {
+    color: var(--text);
+    font-style: normal;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .skill-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 1rem 1.2rem;
+    transition: border-color 0.2s;
+  }
+
+  .skill-item:hover {
+    border-color: rgba(26,58,107,0.3);
+  }
+
+  .skill-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+  }
+
+  .skill-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 1.5px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .project-card {
+    background: var(--card);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  .project-card:hover { background: #f0f4ff; }
+  .project-card:hover::before { transform: scaleX(1); }
+
+  .project-num {
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.2em;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    line-height: 1.3;
+  }
+
+  .project-desc {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .tag.accent {
+    border-color: rgba(200,241,53,0.3);
+    color: var(--accent);
+  }
+
+  .project-arrow {
+    position: absolute;
+    bottom: 2rem; right: 2rem;
+    font-size: 1.2rem;
+    color: var(--muted);
+    transition: color 0.2s, transform 0.2s;
+  }
+
+  .project-card:hover .project-arrow {
+    color: var(--accent);
+    transform: translate(3px, -3px);
+  }
+
+  /* EXPERIENCE */
+  .exp-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 3rem;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .exp-item:first-child { border-top: 1px solid var(--border); }
+
+  .exp-date {
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    padding-top: 0.2rem;
+  }
+
+  .exp-role {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+
+  .exp-company {
+    font-size: 0.8rem;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.05em;
+  }
+
+  .exp-desc {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* CERTIFICATIONS */
+  .cert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+
+  .cert-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .cert-card:hover {
+    border-color: rgba(26,58,107,0.3);
+    transform: translateY(-3px);
+  }
+
+  .cert-issuer {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+  }
+
+  .cert-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  /* CONTACT */
+  .contact-section {
+    padding: 7rem 3rem;
+    background: #1a3a6b;
+    color: #fff;
+  }
+
+  .contact-inner {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .contact-big {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 1.5rem;
+    color: #fff;
+  }
+
+  .contact-big span { color: #c9a84c; }
+
+  .contact-sub {
+    color: rgba(255,255,255,0.65);
+    font-size: 0.85rem;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    padding: 0.8rem 1.5rem;
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: all 0.2s;
+  }
+
+  .contact-link:hover {
+    color: #c9a84c;
+    border-color: #c9a84c;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--muted);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 0 1.5rem; }
+    section { padding: 5rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .contact-section { padding: 5rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">AS_</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-blob"></div>
+  <div class="hero-blob2"></div>
+  <div class="hero-content">
+    <div class="hero-tag">// Available for freelance & full-time</div>
+    <h1 class="hero-name">
+      Ananya
+      <span>Singhal</span>
+    </h1>
+    <p class="hero-desc">
+      Data Analyst & BI Developer turning raw data into <em>decisions that matter.</em>
+      Specializing in Power BI, Python, Excel dashboards, and real-time analytics.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">View My Work →</a>
+      <a href="#contact" class="btn-outline">Let's Connect</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">// 01 — About</div>
+  <h2 class="section-title">Data, Dashboards<br>& Decisions</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        I'm a <em>B.Tech IT graduate</em> from JSS Academy of Technical Education, Noida,
+        with a strong foundation in data analysis, business intelligence, and Python development.
+      </p>
+      <p>
+        I build <em>dashboards that tell stories</em> — from sales performance to student mental health trends.
+        My work lives at the intersection of clean data and clear insight.
+      </p>
+      <p>
+        Beyond analytics, I've worked with <em>IBM Cloud</em>, built chatbot-integrated applications,
+        deployed live sentiment analysis tools, and done freelance live proctoring with Talview.
+      </p>
+      <p>
+        Currently open to <em>Data Analyst, BI, and MIS roles</em> in Delhi NCR and remote positions across India,
+        as well as freelance projects.
+      </p>
+    </div>
+    <div>
+      <div class="skills-grid">
+        <div class="skill-item">
+          <div class="skill-label">BI Tools</div>
+          <div class="skill-name">Power BI & Tableau</div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-label">Language</div>
+          <div class="skill-name">Python & SQL</div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-label">Spreadsheets</div>
+          <div class="skill-name">Advanced Excel</div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-label">Cloud</div>
+          <div class="skill-name">IBM Cloud</div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-label">Web Dev</div>
+          <div class="skill-name">Flask & SQLite</div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-label">NLP</div>
+          <div class="skill-name">VADER Sentiment</div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-label">Deployment</div>
+          <div class="skill-name">Streamlit & GitHub</div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-label">Chatbot</div>
+          <div class="skill-name">IBM Watson</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" style="max-width:100%; padding: 7rem 3rem; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div class="section-label">// 02 — Projects</div>
+    <h2 class="section-title">Work That<br>Speaks Data</h2>
+    <div class="projects-grid">
+
+      <a href="https://github.com/Ananya8900/powerbi-sales-dashboard" target="_blank" class="project-card">
+        <div class="project-num">01 / Power BI</div>
+        <div class="project-title">Sales Performance Dashboard</div>
+        <p class="project-desc">Interactive Power BI dashboard analyzing sales, profit, and product performance across regions and time. Features top/bottom 5 products, sales trends 2020–2024, and city-wise distribution maps.</p>
+        <div class="project-tags">
+          <span class="tag accent">Power BI</span>
+          <span class="tag">Excel</span>
+          <span class="tag">KPI Metrics</span>
+          <span class="tag">DAX</span>
+        </div>
+        <div class="project-arrow">↗</div>
+      </a>
+
+      <a href="https://github.com/Ananya8900" target="_blank" class="project-card">
+        <div class="project-num">02 / Tableau</div>
+        <div class="project-title">Student Depression Analysis Dashboard</div>
+        <p class="project-desc">Tableau dashboard analyzing mental health trends among students. Identifies patterns in depression indicators across academic, social, and lifestyle dimensions using visual analytics.</p>
+        <div class="project-tags">
+          <span class="tag accent">Tableau</span>
+          <span class="tag">Data Viz</span>
+          <span class="tag">Mental Health</span>
+        </div>
+        <div class="project-arrow">↗</div>
+      </a>
+
+      <a href="https://github.com/Ananya8900" target="_blank" class="project-card">
+        <div class="project-num">03 / Flask · IBM Watson</div>
+
+        <div class="project-title">Online Bookstore with AI Chatbot</div>
+        <p class="project-desc">Full-stack online bookstore integrated with IBM Watson chatbot for customer assistance. Built on IBM Cloud with a conversational AI layer for browsing, recommendations, and queries.</p>
+        <div class="project-tags">
+          <span class="tag accent">IBM Watson</span>
+          <span class="tag">IBM Cloud</span>
+          <span class="tag">Python</span>
+          <span class="tag">Chatbot</span>
+        </div>
+        <div class="project-arrow">↗</div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">// 03 — Experience</div>
+  <h2 class="section-title">Where I've<br>Been</h2>
+
+  <div class="exp-item">
+    <div class="exp-date">Jul 2025 — Aug 2025</div>
+    <div>
+      <div class="exp-role">Cloud Technology Intern</div>
+      <div class="exp-company">IBM Cloud</div>
+      <div class="exp-desc">Worked on IBM Cloud infrastructure and services. Built and deployed an online bookstore application integrated with IBM Watson chatbot for AI-powered customer interaction. Gained hands-on experience with cloud deployment, Watson Assistant configuration, and application hosting.</div>
+    </div>
+  </div>
+
+  <div class="exp-item">
+    <div class="exp-date">2024 — Present</div>
+    <div>
+      <div class="exp-role">Freelance Live Proctor</div>
+      <div class="exp-company">Talview</div>
+      <div class="exp-desc">Remote live proctoring for online assessments and examinations. Monitoring test-takers in real time to ensure exam integrity, following standardized protocols and providing accurate session reports.</div>
+    </div>
+  </div>
+
+  <div class="exp-item">
+    <div class="exp-date">2022 — 2026</div>
+    <div>
+      <div class="exp-role">B.Tech Information Technology</div>
+      <div class="exp-company">JSS Academy of Technical Education, Noida</div>
+      <div class="exp-desc">Completed B.Tech in Information Technology. Coordinated college fest events, demonstrating leadership and organizing skills alongside technical coursework in data structures, databases, cloud computing, and software engineering.</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications" style="background: var(--surface); max-width:100%; border-top: 1px solid var(--border);">
+  <div style="max-width:1200px; margin:0 auto; padding: 7rem 0;">
+    <div class="section-label">// 04 — Certifications</div>
+    <h2 class="section-title">Credentials &<br>Courses</h2>
+    <div class="cert-grid">
+      <div class="cert-card">
+        <div class="cert-issuer">Google</div>
+        <div class="cert-name">Google Data Analytics Certificate</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-issuer">Microsoft</div>
+        <div class="cert-name">Microsoft Excel Certification</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-issuer">Udemy</div>
+        <div class="cert-name">Advanced Excel & Dashboard Design</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-issuer">IBM</div>
+        <div class="cert-name">IBM Cloud Fundamentals</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-issuer">Microsoft</div>
+        <div class="cert-name">Power BI Data Analyst</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-issuer">Udemy</div>
+        <div class="cert-name">Python for Data Analysis</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div class="section-label" style="text-align:center; color: rgba(255,255,255,0.5);">// 05 — Contact</div>
+    <div class="contact-big">Let's Work<br><span>Together.</span></div>
+    <p class="contact-sub">
+      Available for freelance projects, data analyst roles, and BI consulting.
+      Based in Noida — open to Delhi NCR and remote work across India.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:ananyasinghal109@gmail.com" class="contact-link">✉ ananyasinghal109@gmail.com</a>
+      <a href="tel:+917417579394" class="contact-link">📞 +91 7417579394</a>
+      <a href="https://linkedin.com/in/singhal-ananya" target="_blank" class="contact-link">in LinkedIn</a>
+      <a href="https://github.com/Ananya8900" target="_blank" class="contact-link">⌥ GitHub</a>
+      <a href="https://ananya-sentiment.streamlit.app" target="_blank" class="contact-link">⚡ Live Project</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2026 Ananya Singhal — Data Analyst · Power BI · Python · Excel
+</footer>
+
+</body>
+</html>
